@@ -59,8 +59,15 @@ set(CMAKE_CXX_FLAGS_DEBUG
      -fsanitize=unreachable,vla-bound,vptr")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
+add_library(stb_impl STATIC src/stb_impl.cpp)
+
+target_include_directories(stb_impl PUBLIC stb)
+target_compile_options(stb_impl PRIVATE -w)
+
 # Executable requirements
 add_executable(${PROJECT_NAME})
+
+target_link_libraries(${PROJECT_NAME} PRIVATE stb_impl)
 
 target_sources(
   ${PROJECT_NAME}
